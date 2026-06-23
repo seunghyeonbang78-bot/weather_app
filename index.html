@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Weather Site</title>
+    <title>Weather Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
 </head>
+
 <body>
 
-<h1>Current Weather</h1>
+<div class="container">
 
-<button onclick="getWeather()">
-    Get My Weather
-</button>
+    <h1>Weather Tracker</h1>
 
-<p id="weather"></p>
+    <button onclick="getWeather()">
+        Get My Weather
+    </button>
 
+    <div id="weatherCard"></div>
+
+    <div id="map"></div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 
 </body>
