@@ -1,18 +1,36 @@
-async function getWeather() {
+const locationResponse =
+await fetch(
+`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+);
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
+const locationData =
+await locationResponse.json();
 
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+const city =
+locationData.address.city ||
+locationData.address.town ||
+locationData.address.village;
 
-        const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
 
-        const response = await fetch(url);
+const weatherResponse =
+await fetch(
+`https://api.open-meteo.com/v1/forecast?
+latitude=${lat}
+&longitude=${lon}
+&current=temperature_2m,
+relative_humidity_2m,
+wind_speed_10m
+&hourly=precipitation_probability`
+);
 
-        const data = await response.json();
 
-        document.getElementById("weather").innerHTML =
-            `Temperature: ${data.current_weather.temperature}°C`;
-    });
-}
+const map =
+L.map('map')
+.setView([lat, lon], 13);
+
+L.tileLayer(
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+).addTo(map);
+
+L.marker([lat, lon])
+.addTo(map);
